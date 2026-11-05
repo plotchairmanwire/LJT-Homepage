@@ -26,7 +26,7 @@ Research Experience
 
 Publications
 ======
-A full, auto-generated list is also available on the [Publications](/publications/) page.
+A full, auto-generated list is also available on the [Publications]({{ site.baseurl }}/publications/) page.
 
 1. **SynLogic: Synthesizing Verifiable Reasoning Data at Scale for Learning Logical Reasoning and Beyond.**  
    **Junteng Liu**, Yuanxiang Fan, Zhuo Jiang, Han Ding, Yongyi Hu, Chi Zhang, Yiqi Shi, Shitong Weng, Aili Chen, Shiqi Chen, Yunan Huang, Mozhi Zhang, Pengyu Zhao, Junjie Yan, Junxian He. *arXiv*, 2025. (First author; code available on GitHub.)
