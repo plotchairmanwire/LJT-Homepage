@@ -29,7 +29,13 @@ jobs:
         run: bundle exec jekyll build --baseurl "/LJT-Homepage"
         env:
           JEKYLL_ENV: production
-      - name: Show output summary
+      - name: Verify publications rendered
         run: |
-          echo "Jekyll build succeeded."
-          find _site -maxdepth 2 -type f | sort | head -n 40
+          echo "--- publication pages generated ---"
+          find _site -path '*publication*' -name '*.html' | sort
+          echo "--- titles on /publications/ index ---"
+          grep -oE "SynLogic|Perception Bottleneck|Truthfulness Hyperplane|In-Context Sharpness|C-Eval|Composing Parameter-Efficient" _site/publications/index.html | sort | uniq -c
+          echo "--- titles on homepage ---"
+          grep -oE "SynLogic|Perception Bottleneck|Truthfulness Hyperplane|In-Context Sharpness|C-Eval|Composing Parameter-Efficient" _site/index.html | sort | uniq -c
+          echo "--- sidebar author checks on homepage ---"
+          grep -oE "jliugi@connect.ust.hk|Vicent0205|junteng88716710|Zhiyuan Honor Scholarship" _site/index.html | sort | uniq -c
