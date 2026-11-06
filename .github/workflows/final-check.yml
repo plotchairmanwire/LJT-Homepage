@@ -1,0 +1,39 @@
+name: Final Build Check (temporary)
+on:
+  workflow_dispatch:
+  push:
+    branches: ["master"]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.328.0
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      - name: Install UglifyJS
+        run: npm install -g uglify-js
+      - name: Minify JS files
+        run: |
+          uglifyjs assets/js/plugins/jquery.greedy-navigation.js assets/js/_main.js assets/js/theme.js -c -m -o assets/js/main.min.js
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "/LJT-Homepage"
+        env:
+          JEKYLL_ENV: production
+      - name: Verify
+        run: |
+          test -f _site/index.html && echo "home OK"
+          test -f _site/cv/index.html && echo "cv OK"
+          test -f _site/publications/index.html && echo "publications index OK"
+          test "$(find _site/publication -name '*.html' | wc -l)" -eq 6 && echo "6 publication pages OK"
+          grep -q "SynLogic" _site/index.html && echo "publications on homepage OK"
+          grep -q "jliugi@connect.ust.hk" _site/index.html && echo "contact OK"
